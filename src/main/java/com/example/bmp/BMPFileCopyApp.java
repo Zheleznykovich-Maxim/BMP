@@ -12,6 +12,7 @@ public class BMPFileCopyApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         stage.setTitle("Копирование BMP в буфер обмена");
+//        stage.getIcons().add(new Image(getClass().getResourceAsStream("java-icon.png")));
         FXMLLoader fxmlLoader = new FXMLLoader(BMPFileCopyApp.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
