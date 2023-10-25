@@ -9,7 +9,7 @@ import javafx.stage.FileChooser;
 import java.net.MalformedURLException;
 
 public class BMPController {
-    private SuccessPopup successPopup = new SuccessPopup();
+
     private java.io.File selectedFile;
     @FXML
     private Label welcomeText;
@@ -32,7 +32,7 @@ public class BMPController {
             fileName.setText(selectedFile.getName());
 
         } else {
-            welcomeText.setText("Ошибка2");
+            Popup.showSuccessPopup("Ошибка: не выбран файл!", false);
         }
     }
     @FXML
@@ -41,22 +41,16 @@ public class BMPController {
             try {
                 Image image = new Image(selectedFile.toURI().toString());
                 if (image.isError()) {
-                    welcomeText.setText("Ошибка1");
+                    Popup.showSuccessPopup("Ошибка в копировании изображения в буфер обмена.",false);
                 } else {
                     Clipboard clipboard = Clipboard.getSystemClipboard();
                     ClipboardContent content = new ClipboardContent();
                     content.putImage(image);
                     clipboard.setContent(content);
-                    // После успешного копирования
-//                    Alert alert = new Alert(Alert.AlertType.);
-//                    alert.setTitle("Успех");
-//                    alert.setHeaderText(null);
-//                    alert.setContentText("Файл успешно скопирован в буфер обмена.");
-//                    alert.showAndWait();
 
                     //Вызвать всплывающее окно успеха
-                    successPopup.showSuccessPopup("Файл успешно скопирован в буфер обмена.");
-
+                    Popup.showSuccessPopup("Файл успешно скопирован в буфер обмена.", true);
+                    fileName.setText("");
                 }
             } catch (Exception e) {
                 e.printStackTrace();

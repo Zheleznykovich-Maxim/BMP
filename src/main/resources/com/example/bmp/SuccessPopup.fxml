@@ -6,16 +6,16 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<VBox alignment="TOP_RIGHT" prefHeight="106.0" prefWidth="369.0" stylesheets="@bootstrapfx.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bmp.SuccessPopupController">
+<VBox alignment="TOP_RIGHT" prefHeight="106.0" prefWidth="369.0" stylesheets="@bootstrapfx.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bmp.PopupController">
 
     <!-- Установите стиль "alert alert-success" из BootstrapFX -->
     <styleClass>
         alert alert-success
     </styleClass>
 
-    <TextFlow styleClass="alert, alert-success" textAlignment="CENTER">
+    <TextFlow fx:id="popupFlow" styleClass="alert" textAlignment="CENTER">
         <Text styleClass="strong" />
-        <Text fx:id="successMessageText" />
+        <Text fx:id="popupText" />
     </TextFlow>
    <Button fx:id="okButton" mnemonicParsing="false" onAction="#okButtonClick" styleClass="btn-success" text="ОК">
       <VBox.margin>

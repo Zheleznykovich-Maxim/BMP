@@ -8,24 +8,30 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class SuccessPopup {
+public class Popup {
 
-    public void showSuccessPopup(String message) {
+    public static void showSuccessPopup(String message, boolean isSuccess) {
 
         try {
             Stage successStage = new Stage();
 
-            successStage.getIcons().add(new Image(getClass().getResourceAsStream("green.png")));
 
-            FXMLLoader fxmlLoader = new FXMLLoader(SuccessPopup.class.getResource("SuccessPopup.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Popup.class.getResource("SuccessPopup.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
 
 //            successStage.initStyle(StageStyle.UTILITY); // Настройте стиль окна по вашим предпочтениям
 //            successStage.initModality(Modality.APPLICATION_MODAL);
 
             // Получение контроллера из FXML и передача сообщения
-            SuccessPopupController controller = fxmlLoader.getController();
+            PopupController controller = fxmlLoader.getController();
             controller.setMessage(message);
+            controller.setPopup(isSuccess);
+            if (isSuccess) {
+                successStage.getIcons().add(new Image(Popup.class.getResourceAsStream("green.png")));
+            }
+            else {
+                successStage.getIcons().add(new Image(Popup.class.getResourceAsStream("error.png")));
+            }
 
             // Отображение окна
             successStage.setScene(scene);
