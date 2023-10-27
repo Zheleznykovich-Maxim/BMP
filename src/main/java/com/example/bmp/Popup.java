@@ -10,13 +10,13 @@ import java.io.IOException;
 
 public class Popup {
 
-    public static void showSuccessPopup(String message, boolean isSuccess) {
+    public static void showPopup(String message, boolean isSuccess) {
 
         try {
             Stage successStage = new Stage();
 
 
-            FXMLLoader fxmlLoader = new FXMLLoader(Popup.class.getResource("SuccessPopup.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Popup.class.getResource("Popup.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
 
 //            successStage.initStyle(StageStyle.UTILITY); // Настройте стиль окна по вашим предпочтениям
