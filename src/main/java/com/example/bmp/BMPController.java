@@ -14,6 +14,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.net.MalformedURLException;
+import java.util.List;
 
 public class BMPController {
 
@@ -21,8 +22,6 @@ public class BMPController {
     public Button copyButton;
     @FXML
     public RadioButton bmpButton, pngButton, jpgButton;
-    @FXML
-    public Label formatLabel;
     public TextField imgHeight;
     public TextField imgWidth;
     @FXML
@@ -39,12 +38,13 @@ public class BMPController {
         imgHeight.setDisable(true);
         imgWidth.setDisable(true);
         FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("BMP Files", "*.bmp"));
+        String[] format = getFormat();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(format[0], format[1]));
         fileChooser.setTitle("Выберите файл BMP");
 
         selectedFile = fileChooser.showOpenDialog(null);
 
-        if (selectedFile != null && selectedFile.isFile() && selectedFile.getName().toLowerCase().endsWith(".bmp")) {
+        if (selectedFile != null && selectedFile.isFile() && selectedFile.getName().toLowerCase().endsWith(format[1].substring(1))) {
 
             fileName.setText(selectedFile.getName());
 
@@ -101,18 +101,21 @@ public class BMPController {
 
     }
     @FXML
-    public void getFormat() {
-
+    public String[] getFormat() {
+        String[] format = new String[2];
         if (bmpButton.isSelected()){
-            formatLabel.setText(bmpButton.getText());
+            format[0] = "BMP Files";
+            format[1] = "*.bmp";
         }
         else if (pngButton.isSelected()) {
-            formatLabel.setText(pngButton.getText());
+            format[0] = "PNG Files";
+            format[1] = "*.png";
         }
         else if (jpgButton.isSelected()) {
-            formatLabel.setText(jpgButton.getText());
-            
+            format[0] = "JPG Files";
+            format[1] = "*.jpg";
         }
+        return format;
     }
 
     public WritableImage resizeImage(Image image) {

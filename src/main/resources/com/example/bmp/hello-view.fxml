@@ -65,18 +65,13 @@
             <Font size="19.0" />
          </font>
       </Text>
-      <RadioButton fx:id="bmpButton" layoutX="205.0" layoutY="238.0" mnemonicParsing="false" onAction="#getFormat" text="BMP">
+      <RadioButton fx:id="bmpButton" layoutX="205.0" layoutY="238.0" mnemonicParsing="false" onAction="#getFormat" selected="true" text="BMP">
          <toggleGroup>
             <ToggleGroup fx:id="format" />
          </toggleGroup>
       </RadioButton>
       <RadioButton fx:id="pngButton" layoutX="205.0" layoutY="271.0" mnemonicParsing="false" onAction="#getFormat" text="PNG" toggleGroup="$format" />
       <RadioButton fx:id="jpgButton" layoutX="205.0" layoutY="302.0" mnemonicParsing="false" onAction="#getFormat" text="JPG" toggleGroup="$format" />
-      <Label fx:id="formatLabel" layoutX="24.0" layoutY="195.0" prefHeight="49.0" prefWidth="174.0" text="Label">
-         <font>
-            <Font size="33.0" />
-         </font>
-      </Label>
 
    </children>
 </AnchorPane>
