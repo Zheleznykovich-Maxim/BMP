@@ -1,13 +1,17 @@
 package com.example.bmp;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.net.MalformedURLException;
 
@@ -21,8 +25,10 @@ public class BMPController {
     public Label formatLabel;
     public TextField imgHeight;
     public TextField imgWidth;
+    @FXML
+    public Button previewButton;
     private java.io.File selectedFile;
-
+    private Image selectedImage;
     @FXML
     private Label fileName;
 
@@ -46,11 +52,13 @@ public class BMPController {
             if (image.isError()) {
                 Popup.showPopup("Ошибка в файле изображения.", false);
             } else {
+                selectedImage = image;
                 copyButton.setDisable(false);
                 imgHeight.setDisable(false);
                 imgHeight.setText(String.valueOf((int)image.getHeight()));
                 imgWidth.setDisable(false);
                 imgWidth.setText(String.valueOf((int)image.getWidth()));
+
             }
         } else {
             Popup.showPopup("Ошибка: не выбран файл!", false);
@@ -121,6 +129,7 @@ public class BMPController {
         imageView.setFitHeight(height);
 //            imageView.setPreserveRatio(true);
         imageView.snapshot(null, resizedImage);
+        selectedImage = resizedImage;
         return resizedImage;
 
     }
@@ -140,5 +149,18 @@ public class BMPController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+    @FXML
+    private void showPreviewImage() {
+        resizeImage(selectedImage);
+        Stage previewStage = new Stage();
+        ImageView previewImageView = new ImageView(selectedImage);
+        StackPane stackPane = new StackPane(previewImageView);
+        Scene previewScene = new Scene(stackPane, selectedImage.getWidth(), selectedImage.getHeight());
+
+        previewStage.setTitle("Предварительный просмотр");
+        previewStage.setScene(previewScene);
+        previewStage.show();
+    }
+
 
 }
