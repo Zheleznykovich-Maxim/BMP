@@ -1,9 +1,9 @@
 package com.example.bmp;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
@@ -14,7 +14,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.net.MalformedURLException;
-import java.util.List;
 
 public class BMPController {
 
@@ -82,7 +81,7 @@ public class BMPController {
                         Clipboard clipboard = Clipboard.getSystemClipboard();
                         ClipboardContent content = new ClipboardContent();
 
-                        content.putImage(resizeImage(image));
+                        content.putImage(resizeImage(selectedImage));
                         clipboard.setContent(content);
 
                         //Вызвать всплывающее окно успеха
@@ -134,6 +133,20 @@ public class BMPController {
         imageView.snapshot(null, resizedImage);
         selectedImage = resizedImage;
         return resizedImage;
+
+    }
+    @FXML
+    private void filterBlackAndWhite() {
+        ImageView imageView = new ImageView(selectedImage);
+        WritableImage resizedImage = new WritableImage(
+                (int)selectedImage.getWidth(),
+                (int)selectedImage.getHeight());
+        // Применение эффекта ColorAdjust для получения чёрно-белого изображения
+        ColorAdjust colorAdjust = new ColorAdjust();
+        colorAdjust.setSaturation(-1.0); // Установите насыщенность в -1, чтобы получить чёрно-белое изображение
+        imageView.setEffect(colorAdjust);
+        imageView.snapshot(null, resizedImage);
+        selectedImage = resizedImage;
 
     }
     private boolean isValidNumber(String text) {
