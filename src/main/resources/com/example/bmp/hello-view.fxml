@@ -11,67 +11,91 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="503.0" prefWidth="592.0" stylesheets="@bootstrapfx.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bmp.BMPController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="503.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bmp.BMPController">
    <children>
       <Button alignment="CENTER" contentDisplay="CENTER" layoutX="216.0" layoutY="395.0" mnemonicParsing="false" onAction="#selectAndCopyBMPFile" prefHeight="39.0" prefWidth="160.0" styleClass="btn" text="Выберите файл" AnchorPane.leftAnchor="216.0" AnchorPane.rightAnchor="216.0">
          <font>
             <Font size="18.0" />
          </font></Button>
-      <TextField fx:id="imgHeight" disable="true" layoutX="22.0" layoutY="154.0" prefHeight="31.0" prefWidth="70.0" />
-      <TextField fx:id="imgWidth" disable="true" layoutX="22.0" layoutY="89.0" prefHeight="31.0" prefWidth="70.0" />
+      <TextField fx:id="imgHeight" disable="true" layoutX="25.0" layoutY="153.0" prefHeight="31.0" prefWidth="70.0" AnchorPane.leftAnchor="25.0" />
+      <TextField fx:id="imgWidth" disable="true" layoutX="25.0" layoutY="88.0" prefHeight="31.0" prefWidth="70.0" AnchorPane.leftAnchor="25.0" />
       <Label fx:id="fileName" alignment="CENTER" contentDisplay="CENTER" layoutX="187.0" layoutY="356.0" prefHeight="21.0" prefWidth="218.0" textAlignment="CENTER">
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Button fx:id="copyButton" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="165.0" layoutY="443.0" mnemonicParsing="false" onAction="#onCopyClick" prefHeight="39.0" prefWidth="262.0" text="Копировать в буфер обмена" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="165.0">
+      <Button fx:id="copyButton" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="165.0" layoutY="441.0" mnemonicParsing="false" onAction="#onCopyClick" prefHeight="39.0" prefWidth="262.0" text="Копировать в буфер обмена" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="165.0">
          <font>
             <Font size="18.0" />
          </font></Button>
-      <Text layoutX="22.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ширина" wrappingWidth="88.99998664855957">
+      <Text layoutX="21.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ширина" textAlignment="CENTER" wrappingWidth="69.99998474121094" AnchorPane.leftAnchor="25.0">
          <font>
-            <Font size="19.0" />
+            <Font size="18.0" />
+         </font></Text>
+      <Text layoutX="25.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Высота" textAlignment="CENTER" wrappingWidth="69.99998474121094" AnchorPane.leftAnchor="25.0">
+         <font>
+            <Font size="18.0" />
          </font>
       </Text>
-      <Text layoutX="22.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Высота" wrappingWidth="88.99998664855957">
+      <Text layoutX="25.0" layoutY="38.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="Размер" wrappingWidth="81.99999523162842" AnchorPane.leftAnchor="25.0">
          <font>
-            <Font size="19.0" />
+            <Font size="22.0" />
          </font>
       </Text>
-      <Text layoutX="25.0" layoutY="38.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="Размер" wrappingWidth="81.99999523162842">
-         <font>
-            <Font size="21.0" />
-         </font>
-      </Text>
-      <Button fx:id="previewButton" layoutX="22.0" layoutY="265.0" mnemonicParsing="false" onAction="#showPreviewImage" text="Предосмотр" />
+      <Button fx:id="previewButton" layoutX="25.0" layoutY="353.0" mnemonicParsing="false" onAction="#showPreviewImage" text="Предосмотр" />
       <ListView layoutX="360.0" layoutY="51.0" prefHeight="200.0" prefWidth="218.0" />
       <Text layoutX="360.0" layoutY="38.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="История копирования" textAlignment="CENTER" wrappingWidth="217.99999356269836">
          <font>
             <Font size="20.0" />
          </font>
       </Text>
-      <Text layoutX="198.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Фильтры" textAlignment="CENTER" wrappingWidth="88.99998664855957">
+      <Text layoutX="187.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Фильтры" textAlignment="CENTER" wrappingWidth="88.99998664855957">
          <font>
-            <Font size="19.0" />
+            <Font size="20.0" />
          </font>
       </Text>
       <Button layoutX="360.0" layoutY="265.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="106.0" text="Button" />
       <Button layoutX="472.0" layoutY="265.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="106.0" text="Button" />
-      <CheckBox layoutX="205.0" layoutY="58.0" mnemonicParsing="false" onAction="#filterBlackAndWhite" prefHeight="21.0" prefWidth="93.0" text="Ч\б" />
-      <CheckBox layoutX="205.0" layoutY="91.0" mnemonicParsing="false" text="CheckBox" />
-      <CheckBox layoutX="205.0" layoutY="124.0" mnemonicParsing="false" text="CheckBox" />
-      <CheckBox layoutX="205.0" layoutY="156.0" mnemonicParsing="false" text="CheckBox" />
-      <Text layoutX="197.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Формат" textAlignment="CENTER" wrappingWidth="81.99999523162842">
+      <CheckBox fx:id="bwButton" layoutX="194.0" layoutY="58.0" mnemonicParsing="false" onAction="#filterBlackAndWhite" prefHeight="21.0" prefWidth="93.0" text="Ч\б" />
+      <CheckBox fx:id="contrastButton" layoutX="194.0" layoutY="91.0" mnemonicParsing="false" onAction="#filterContrast" text="Контраст" />
+      <CheckBox layoutX="194.0" layoutY="124.0" mnemonicParsing="false" text="CheckBox" />
+      <CheckBox layoutX="194.0" layoutY="156.0" mnemonicParsing="false" text="CheckBox" />
+      <Text layoutX="25.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Формат" textAlignment="CENTER" wrappingWidth="81.99999523162842" AnchorPane.leftAnchor="25.0">
          <font>
-            <Font size="19.0" />
+            <Font size="20.0" />
          </font>
       </Text>
-      <RadioButton fx:id="bmpButton" layoutX="205.0" layoutY="238.0" mnemonicParsing="false" onAction="#getFormat" selected="true" text="BMP">
+      <RadioButton fx:id="bmpButton" layoutX="37.0" layoutY="243.0" mnemonicParsing="false" onAction="#getFormat" selected="true" text="BMP" AnchorPane.leftAnchor="30.0">
          <toggleGroup>
             <ToggleGroup fx:id="format" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="pngButton" layoutX="205.0" layoutY="271.0" mnemonicParsing="false" onAction="#getFormat" text="PNG" toggleGroup="$format" />
-      <RadioButton fx:id="jpgButton" layoutX="205.0" layoutY="302.0" mnemonicParsing="false" onAction="#getFormat" text="JPG" toggleGroup="$format" />
+      <RadioButton fx:id="pngButton" layoutX="37.0" layoutY="276.0" mnemonicParsing="false" onAction="#getFormat" text="PNG" toggleGroup="$format" AnchorPane.leftAnchor="30.0" />
+      <RadioButton fx:id="jpgButton" layoutX="37.0" layoutY="307.0" mnemonicParsing="false" onAction="#getFormat" text="JPG" toggleGroup="$format" AnchorPane.leftAnchor="30.0" />
+      <Text layoutX="187.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Размытие" textAlignment="CENTER" wrappingWidth="88.99998995661736">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <RadioButton fx:id="lightBlurButton" disable="true" layoutX="194.0" layoutY="244.0" mnemonicParsing="false" onAction="#blurImage" text="лёгкое">
+         <toggleGroup>
+            <ToggleGroup fx:id="blur" />
+         </toggleGroup>
+         <font>
+            <Font size="16.0" />
+         </font>
+      </RadioButton>
+      <RadioButton fx:id="middleBlurButton" disable="true" layoutX="194.0" layoutY="277.0" mnemonicParsing="false" onAction="#blurImage" text="среднее" toggleGroup="$blur">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </RadioButton>
+      <RadioButton fx:id="strongBlurButton" disable="true" layoutX="194.0" layoutY="308.0" mnemonicParsing="false" onAction="#blurImage" text="сильное" toggleGroup="$blur">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </RadioButton>
+      <CheckBox fx:id="blurButton" layoutX="286.0" layoutY="203.0" mnemonicParsing="false" onAction="#unlockBlur" prefHeight="21.0" prefWidth="0.0" />
+      <TextField fx:id="inputContrast" layoutX="302.0" layoutY="89.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="35.0" />
 
    </children>
 </AnchorPane>

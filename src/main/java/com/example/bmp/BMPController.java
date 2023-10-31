@@ -2,18 +2,23 @@ package com.example.bmp;
 
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
 import javafx.scene.effect.ColorAdjust;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
+import javafx.scene.effect.GaussianBlur;
+import javafx.scene.image.*;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.net.MalformedURLException;
+
+import static com.example.bmp.Filter.*;
+import static com.example.bmp.Validation.isValidNumber;
+import static com.example.bmp.Validation.showAlert;
 
 public class BMPController {
 
@@ -23,9 +28,22 @@ public class BMPController {
     public RadioButton bmpButton, pngButton, jpgButton;
     public TextField imgHeight;
     public TextField imgWidth;
+
     @FXML
     public Button previewButton;
+    public CheckBox bwButton;
+    public RadioButton lightBlurButton;
+    public RadioButton middleBlurButton;
+    public RadioButton strongBlurButton;
+    public CheckBox blurButton;
+    public TextField inputContrast;
+    public CheckBox contrastButton;
     private java.io.File selectedFile;
+    private boolean isBW;
+    private boolean isBlur;
+    private int blurValue;
+    private int contrastValue;
+    private boolean isContrast;
     private Image selectedImage;
     @FXML
     private Label fileName;
@@ -52,6 +70,7 @@ public class BMPController {
                 Popup.showPopup("Ошибка в файле изображения.", false);
             } else {
                 selectedImage = image;
+//                isBW = image;
                 copyButton.setDisable(false);
                 imgHeight.setDisable(false);
                 imgHeight.setText(String.valueOf((int)image.getHeight()));
@@ -65,10 +84,11 @@ public class BMPController {
     }
     @FXML
     protected void onCopyClick() {
-        if (!isValidNumber(imgHeight.getText()) || !isValidNumber(imgWidth.getText())) {
+        if (!isValidNumber(imgHeight.getText(), 1, 1000)
+                || !isValidNumber(imgWidth.getText(), 1, 1000)) {
             // Если новое значение недопустимо, восстанавливаем предыдущее значение
 //            imgHeight.setText(previousValue);
-            imgHeight.getStyleClass().add("");
+//            imgHeight.getStyleClass().add("");
             showAlert("Ошибка", "Введите целое число в диапазоне [1, 1000]");
         } else {
             // Если новое значение допустимо, обновляем предыдущее значение
@@ -137,45 +157,110 @@ public class BMPController {
     }
     @FXML
     private void filterBlackAndWhite() {
-        ImageView imageView = new ImageView(selectedImage);
-        WritableImage resizedImage = new WritableImage(
-                (int)selectedImage.getWidth(),
-                (int)selectedImage.getHeight());
-        // Применение эффекта ColorAdjust для получения чёрно-белого изображения
-        ColorAdjust colorAdjust = new ColorAdjust();
-        colorAdjust.setSaturation(-1.0); // Установите насыщенность в -1, чтобы получить чёрно-белое изображение
-        imageView.setEffect(colorAdjust);
-        imageView.snapshot(null, resizedImage);
-        selectedImage = resizedImage;
+
+        if (bwButton.isSelected()) {
+            isBW = true;
+        }
+        else {
+//            selectedImage = isBW;
+            isBW = false;
+        }
 
     }
-    private boolean isValidNumber(String text) {
-        try {
-            int value = Integer.parseInt(text);
-            return value >= 1 && value <= 1000;
-        } catch (NumberFormatException e) {
-            return false;
+    @FXML
+    private void unlockBlur() {
+        if (blurButton.isSelected()) {
+//            isBlur = selectedImage;
+
+            lightBlurButton.setDisable(false);
+            middleBlurButton.setDisable(false);
+            strongBlurButton.setDisable(false);
+
+        }
+        else {
+//            selectedImage = isBlur;
+            isBlur = false;
+//            if (bwButton.isSelected()) {
+//                filterBlackAndWhite();
+//            }
+            lightBlurButton.setDisable(true);
+            lightBlurButton.setSelected(false);
+            middleBlurButton.setDisable(true);
+            middleBlurButton.setSelected(false);
+            strongBlurButton.setDisable(true);
+            strongBlurButton.setSelected(false);
+        }
+    }
+    @FXML
+    private void blurImage() {
+//        isBlur = selectedImage;
+        isBlur = true;
+        if (lightBlurButton.isSelected()){
+            blurValue = 5;
+        } else if (middleBlurButton.isSelected()) {
+            blurValue = 10;
+        } else if (strongBlurButton.isSelected()) {
+            blurValue = 20;
+        }
+        else {
+            isBlur = false;
         }
     }
 
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+    @FXML
+    private void filterContrast() {
+        if (contrastButton.isSelected()) {
+//            isContrast = selectedImage;
+            if (!isValidNumber(inputContrast.getText(), 1.0, 3.0)) {
+                showAlert("Ошибка в значении контрастности", "Введите вещественное число в диапазоне [1.0, 3.0]");
+                contrastButton.setSelected(false);
+            }
+            else {
+                isContrast = true;
+            }
+        }
+        else {
+//            selectedImage = isContrast;
+            isContrast = false;
+//            if (bwButton.isSelected()) {
+//                filterBlackAndWhite();
+//            }
+        }
+
     }
+
     @FXML
     private void showPreviewImage() {
-        resizeImage(selectedImage);
-        Stage previewStage = new Stage();
-        ImageView previewImageView = new ImageView(selectedImage);
-        StackPane stackPane = new StackPane(previewImageView);
-        Scene previewScene = new Scene(stackPane, selectedImage.getWidth(), selectedImage.getHeight());
+        if (!isValidNumber(imgHeight.getText(), 1, 1000)
+                || !isValidNumber(imgWidth.getText(), 1, 1000)) {
+            // Если новое значение недопустимо, восстанавливаем предыдущее значение
+//            imgHeight.setText(previousValue);
+//            imgHeight.getStyleClass().add("");
+            showAlert("Ошибка в размерах изображения", "Введите целое число в диапазоне [1, 1000]");
+        }
+        else {
+            Image baseImage = selectedImage;
+            resizeImage(selectedImage);
+            if (isBW) {
+                selectedImage = BlackAndWhiteFilter(selectedImage);
+            }
+            if (isContrast) {
+                selectedImage = ContrastFilter(selectedImage, inputContrast);
+            }
+            if (isBlur) {
+                selectedImage = BlurFilter(selectedImage, blurValue);
+            }
+            Stage previewStage = new Stage();
+            ImageView previewImageView = new ImageView(selectedImage);
+            StackPane stackPane = new StackPane(previewImageView);
+            Scene previewScene = new Scene(stackPane, selectedImage.getWidth(), selectedImage.getHeight());
 
-        previewStage.setTitle("Предварительный просмотр");
-        previewStage.setScene(previewScene);
-        previewStage.show();
+            previewStage.setTitle("Предварительный просмотр");
+            previewStage.setScene(previewScene);
+            previewStage.show();
+            selectedImage = baseImage;
+        }
+
     }
 
 
