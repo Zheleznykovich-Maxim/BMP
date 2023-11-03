@@ -38,12 +38,15 @@ public class BMPController {
     public CheckBox blurButton;
     public TextField inputContrast;
     public CheckBox contrastButton;
+    public TextField inputBrightness;
+    public CheckBox brightnessButton;
     private java.io.File selectedFile;
     private boolean isBW;
     private boolean isBlur;
     private int blurValue;
     private int contrastValue;
     private boolean isContrast;
+    private boolean isBrightness;
     private Image selectedImage;
     @FXML
     private Label fileName;
@@ -211,7 +214,7 @@ public class BMPController {
     private void filterContrast() {
         if (contrastButton.isSelected()) {
 //            isContrast = selectedImage;
-            if (!isValidNumber(inputContrast.getText(), 1.0, 3.0)) {
+            if (!isValidNumber(inputContrast.getText(), 1.0, 3.0, false)) {
                 showAlert("Ошибка в значении контрастности", "Введите вещественное число в диапазоне [1.0, 3.0]");
                 contrastButton.setSelected(false);
             }
@@ -227,6 +230,26 @@ public class BMPController {
 //            }
         }
 
+    }
+    @FXML
+    private void filterBrightness() {
+        if (brightnessButton.isSelected()) {
+//            isContrast = selectedImage;
+            if (!isValidNumber(inputBrightness.getText(), 1.0, 3.0, true)) {
+                showAlert("Ошибка в значении яркости", "Введите вещественное число в диапазоне [-3.0, 3.0]");
+                brightnessButton.setSelected(false);
+            }
+            else {
+                isBrightness = true;
+            }
+        }
+        else {
+//            selectedImage = isContrast;
+            isBrightness = false;
+//            if (bwButton.isSelected()) {
+//                filterBlackAndWhite();
+//            }
+        }
     }
 
     @FXML
@@ -246,6 +269,13 @@ public class BMPController {
             }
             if (isContrast) {
                 selectedImage = ContrastFilter(selectedImage, inputContrast);
+                contrastButton.setSelected(false);
+                isContrast = false;
+            }
+            if (isBrightness) {
+                selectedImage = BrightnessFilter(selectedImage, inputBrightness);
+                brightnessButton.setSelected(false);
+                isBrightness = false;
             }
             if (isBlur) {
                 selectedImage = BlurFilter(selectedImage, blurValue);
