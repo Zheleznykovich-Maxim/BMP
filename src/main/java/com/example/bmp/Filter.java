@@ -1,13 +1,11 @@
 package com.example.bmp;
 
 import javafx.scene.SnapshotParameters;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.GaussianBlur;
+import javafx.scene.effect.*;
 import javafx.scene.image.*;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.control.TextField;
-import java.awt.*;
 
 public class Filter {
     public static WritableImage BlackAndWhiteFilter(Image selectedImage) {
@@ -76,6 +74,32 @@ public class Filter {
         }
 
         return brightenedImage;
+    }
+    public static WritableImage DistortionFilter(Image selectedImage, int choosedDistortion) {
+        int width = (int) selectedImage.getWidth();
+        int height = (int) selectedImage.getHeight();
+        // Получите PixelReader для исходного изображения и PixelWriter для холста
+        WritableImage distortedImage = new WritableImage(width, height);
+        PixelReader pixelReader = selectedImage.getPixelReader();
+        PixelWriter distortedPixelWriter = distortedImage.getPixelWriter();
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                // Пример: Измените цвет каждого пикселя, добавив шум
+                double red = pixelReader.getColor(x, y).getRed();
+                double green = pixelReader.getColor(x, y).getGreen();
+                double blue = pixelReader.getColor(x, y).getBlue();
+
+                // Добавьте шум
+                red = Math.min(1.0, Math.max(0.0, red + Math.random() * 0.2 * choosedDistortion - 0.1 * choosedDistortion));
+                green = Math.min(1.0, Math.max(0.0, green + Math.random() * 0.2 * choosedDistortion - 0.1 * choosedDistortion));
+                blue = Math.min(1.0, Math.max(0.0, blue + Math.random() * 0.2 * choosedDistortion - 0.1 * choosedDistortion));
+
+                // Запишите измененные цвета в WritableImage
+                distortedPixelWriter.setColor(x, y, javafx.scene.paint.Color.color(red, green, blue));
+            }
+        }
+        return distortedImage;
+
     }
     public static WritableImage BlurFilter(Image selectedImage, int blurValue) {
 

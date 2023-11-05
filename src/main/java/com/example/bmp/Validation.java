@@ -11,10 +11,9 @@ public class Validation {
             return false;
         }
     }
-    public static boolean isValidNumber(String text, double min, double max, boolean isModule) {
+    public static boolean isValidNumber(String text, double min, double max) {
         try {
             double value = Double.parseDouble(text);
-            if (isModule) { value = Math.abs(value);}
             return value >= min && value <= max;
         } catch (NumberFormatException e) {
             return false;

@@ -2,15 +2,11 @@ package com.example.bmp;
 
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.*;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -40,17 +36,24 @@ public class BMPController {
     public CheckBox contrastButton;
     public TextField inputBrightness;
     public CheckBox brightnessButton;
+    public CheckBox distButton;
+    public ComboBox distBox;
     private java.io.File selectedFile;
     private boolean isBW;
     private boolean isBlur;
     private int blurValue;
-    private int contrastValue;
     private boolean isContrast;
     private boolean isBrightness;
+    private boolean isDistorion;
+    private int choosedDistorion;
     private Image selectedImage;
     @FXML
     private Label fileName;
 
+
+    public void initialize() {
+        distBox.getItems().addAll(1, 2, 3, 4, 5);
+    }
     @FXML
     protected void selectAndCopyBMPFile() throws MalformedURLException {
         fileName.setText("");
@@ -214,16 +217,18 @@ public class BMPController {
     private void filterContrast() {
         if (contrastButton.isSelected()) {
 //            isContrast = selectedImage;
-            if (!isValidNumber(inputContrast.getText(), 1.0, 3.0, false)) {
+            if (!isValidNumber(inputContrast.getText(), 1.0, 3.0)) {
                 showAlert("Ошибка в значении контрастности", "Введите вещественное число в диапазоне [1.0, 3.0]");
                 contrastButton.setSelected(false);
             }
             else {
                 isContrast = true;
+                inputContrast.setDisable(true);
             }
         }
         else {
 //            selectedImage = isContrast;
+            inputContrast.setDisable(false);
             isContrast = false;
 //            if (bwButton.isSelected()) {
 //                filterBlackAndWhite();
@@ -235,23 +240,38 @@ public class BMPController {
     private void filterBrightness() {
         if (brightnessButton.isSelected()) {
 //            isContrast = selectedImage;
-            if (!isValidNumber(inputBrightness.getText(), 1.0, 3.0, true)) {
-                showAlert("Ошибка в значении яркости", "Введите вещественное число в диапазоне [-3.0, 3.0]");
+            if (!isValidNumber(inputBrightness.getText(), -3.0, 3.0)) {
+                showAlert("Ошибка в значении яркостити", "Введите вещественное число в диапазоне [-3.0, 3.0]");
                 brightnessButton.setSelected(false);
             }
             else {
                 isBrightness = true;
+                inputBrightness.setDisable(true);
             }
         }
         else {
 //            selectedImage = isContrast;
+            inputBrightness.setDisable(false);
             isBrightness = false;
 //            if (bwButton.isSelected()) {
 //                filterBlackAndWhite();
 //            }
         }
     }
-
+    @FXML
+    private void filterDistortion() {
+        if (distButton.isSelected()) {
+            isDistorion = true;
+        }
+        else {
+//            selectedImage = isBW;
+            isDistorion = false;
+        }
+    }
+    @FXML
+    private void chooseDistortion() {
+        choosedDistorion = Integer.parseInt(distBox.getSelectionModel().getSelectedItem().toString());
+    }
     @FXML
     private void showPreviewImage() {
         if (!isValidNumber(imgHeight.getText(), 1, 1000)
@@ -269,13 +289,12 @@ public class BMPController {
             }
             if (isContrast) {
                 selectedImage = ContrastFilter(selectedImage, inputContrast);
-                contrastButton.setSelected(false);
-                isContrast = false;
             }
             if (isBrightness) {
                 selectedImage = BrightnessFilter(selectedImage, inputBrightness);
-                brightnessButton.setSelected(false);
-                isBrightness = false;
+            }
+            if (isDistorion) {
+                selectedImage = DistortionFilter(selectedImage, choosedDistorion);
             }
             if (isBlur) {
                 selectedImage = BlurFilter(selectedImage, blurValue);
