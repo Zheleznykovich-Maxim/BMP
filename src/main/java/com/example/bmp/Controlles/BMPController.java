@@ -1,5 +1,6 @@
-package com.example.bmp;
+package com.example.bmp.Controlles;
 
+import com.example.bmp.Popup;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -38,14 +39,16 @@ public class BMPController {
     public CheckBox brightnessButton;
     public CheckBox distButton;
     public ComboBox distBox;
+    public CheckBox sepiaButton;
     private java.io.File selectedFile;
     private boolean isBW;
+    private boolean isSepia;
     private boolean isBlur;
     private int blurValue;
     private boolean isContrast;
     private boolean isBrightness;
-    private boolean isDistorion;
-    private int choosedDistorion;
+    private boolean isDistortion;
+    private int choosedDistortion;
     private Image selectedImage;
     @FXML
     private Label fileName;
@@ -55,7 +58,7 @@ public class BMPController {
         distBox.getItems().addAll(1, 2, 3, 4, 5);
     }
     @FXML
-    protected void selectAndCopyBMPFile() throws MalformedURLException {
+    protected void selectFile() throws MalformedURLException {
         fileName.setText("");
         copyButton.setDisable(true);
         imgHeight.setDisable(true);
@@ -174,6 +177,15 @@ public class BMPController {
 
     }
     @FXML
+    private void filterSepia() {
+        if (sepiaButton.isSelected()) {
+            isSepia = true;
+        }
+        else {
+            isSepia = false;
+        }
+    }
+    @FXML
     private void unlockBlur() {
         if (blurButton.isSelected()) {
 //            isBlur = selectedImage;
@@ -261,16 +273,16 @@ public class BMPController {
     @FXML
     private void filterDistortion() {
         if (distButton.isSelected()) {
-            isDistorion = true;
+            isDistortion = true;
         }
         else {
 //            selectedImage = isBW;
-            isDistorion = false;
+            isDistortion = false;
         }
     }
     @FXML
     private void chooseDistortion() {
-        choosedDistorion = Integer.parseInt(distBox.getSelectionModel().getSelectedItem().toString());
+        choosedDistortion = Integer.parseInt(distBox.getSelectionModel().getSelectedItem().toString());
     }
     @FXML
     private void showPreviewImage() {
@@ -287,14 +299,17 @@ public class BMPController {
             if (isBW) {
                 selectedImage = BlackAndWhiteFilter(selectedImage);
             }
+            if (isSepia) {
+                selectedImage = SepiaFilter(selectedImage);
+            }
             if (isContrast) {
                 selectedImage = ContrastFilter(selectedImage, inputContrast);
             }
             if (isBrightness) {
                 selectedImage = BrightnessFilter(selectedImage, inputBrightness);
             }
-            if (isDistorion) {
-                selectedImage = DistortionFilter(selectedImage, choosedDistorion);
+            if (isDistortion) {
+                selectedImage = DistortionFilter(selectedImage, choosedDistortion);
             }
             if (isBlur) {
                 selectedImage = BlurFilter(selectedImage, blurValue);

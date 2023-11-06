@@ -1,4 +1,4 @@
-package com.example.bmp; // Замените на ваш пакет
+package com.example.bmp.Controlles; // Замените на ваш пакет
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

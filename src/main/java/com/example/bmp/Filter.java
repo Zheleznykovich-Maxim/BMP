@@ -20,6 +20,15 @@ public class Filter {
         imageView.snapshot(null, bwImage);
         return bwImage;
     }
+    public static WritableImage SepiaFilter(Image selectedImage) {
+        int width = (int) selectedImage.getWidth();
+        int height = (int) selectedImage.getHeight();
+        WritableImage sepiaImage = new WritableImage(width, height);
+        ImageView imageView = new ImageView(selectedImage);
+        imageView.setEffect(new SepiaTone());
+        imageView.snapshot(null, sepiaImage);
+        return sepiaImage;
+    }
     public static WritableImage ContrastFilter(Image selectedImage, TextField inputContrast) {
         Image testImage = selectedImage;
 //        selectedImage = contrastBaseImage;

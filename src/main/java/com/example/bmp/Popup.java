@@ -1,6 +1,7 @@
 package com.example.bmp;
 
 
+import com.example.bmp.Controlles.PopupController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -27,10 +28,10 @@ public class Popup {
             controller.setMessage(message);
             controller.setPopup(isSuccess);
             if (isSuccess) {
-                successStage.getIcons().add(new Image(Popup.class.getResourceAsStream("green.png")));
+                successStage.getIcons().add(new Image(Popup.class.getResourceAsStream("imgs/green.png")));
             }
             else {
-                successStage.getIcons().add(new Image(Popup.class.getResourceAsStream("error.png")));
+                successStage.getIcons().add(new Image(Popup.class.getResourceAsStream("imgs/error.png")));
             }
 
             // Отображение окна

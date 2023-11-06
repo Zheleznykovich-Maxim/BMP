@@ -12,19 +12,19 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="503.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bmp.BMPController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="503.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bmp.Controlles.BMPController">
    <children>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="216.0" layoutY="395.0" mnemonicParsing="false" onAction="#selectAndCopyBMPFile" prefHeight="39.0" prefWidth="160.0" styleClass="btn" text="Выберите файл" AnchorPane.leftAnchor="216.0" AnchorPane.rightAnchor="216.0">
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="217.0" layoutY="404.0" mnemonicParsing="false" onAction="#selectFile" prefHeight="39.0" prefWidth="160.0" styleClass="btn" text="Выберите файл" AnchorPane.leftAnchor="217.0" AnchorPane.rightAnchor="215.0">
          <font>
             <Font size="18.0" />
          </font></Button>
       <TextField fx:id="imgHeight" disable="true" layoutX="25.0" layoutY="153.0" prefHeight="31.0" prefWidth="70.0" AnchorPane.leftAnchor="25.0" />
       <TextField fx:id="imgWidth" disable="true" layoutX="25.0" layoutY="88.0" prefHeight="31.0" prefWidth="70.0" AnchorPane.leftAnchor="25.0" />
-      <Label fx:id="fileName" alignment="CENTER" contentDisplay="CENTER" layoutX="187.0" layoutY="356.0" prefHeight="21.0" prefWidth="218.0" textAlignment="CENTER">
+      <Label fx:id="fileName" alignment="CENTER" contentDisplay="CENTER" layoutX="188.0" layoutY="365.0" prefHeight="21.0" prefWidth="218.0" textAlignment="CENTER">
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Button fx:id="copyButton" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="165.0" layoutY="441.0" mnemonicParsing="false" onAction="#onCopyClick" prefHeight="39.0" prefWidth="262.0" text="Копировать в буфер обмена" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="165.0">
+      <Button fx:id="copyButton" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="166.0" layoutY="450.0" mnemonicParsing="false" onAction="#onCopyClick" prefHeight="39.0" prefWidth="262.0" text="Копировать в буфер обмена" AnchorPane.leftAnchor="166.0" AnchorPane.rightAnchor="164.0">
          <font>
             <Font size="18.0" />
          </font></Button>
@@ -49,17 +49,17 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <Text layoutX="165.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Фильтры" textAlignment="CENTER" wrappingWidth="88.99998664855957" AnchorPane.leftAnchor="165.0">
+      <Text layoutX="166.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Фильтры" textAlignment="CENTER" wrappingWidth="81.99999523162842" AnchorPane.leftAnchor="166.0">
          <font>
             <Font size="20.0" />
          </font>
       </Text>
       <Button layoutX="360.0" layoutY="265.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="106.0" text="Button" />
       <Button layoutX="472.0" layoutY="265.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="106.0" text="Button" />
-      <CheckBox fx:id="bwButton" layoutX="172.0" layoutY="58.0" mnemonicParsing="false" onAction="#filterBlackAndWhite" prefHeight="21.0" prefWidth="93.0" text="Ч\б" />
-      <CheckBox fx:id="contrastButton" layoutX="172.0" layoutY="91.0" mnemonicParsing="false" onAction="#filterContrast" text="Контраст" />
-      <CheckBox fx:id="brightnessButton" layoutX="172.0" layoutY="124.0" mnemonicParsing="false" onAction="#filterBrightness" text="Яркость" />
-      <CheckBox fx:id="distButton" layoutX="172.0" layoutY="156.0" mnemonicParsing="false" onAction="#filterDistortion" text="Искажение" />
+      <CheckBox fx:id="bwButton" layoutX="172.0" layoutY="58.0" mnemonicParsing="false" onAction="#filterBlackAndWhite" prefHeight="21.0" prefWidth="93.0" text="Ч\б" AnchorPane.leftAnchor="172.0" AnchorPane.topAnchor="58.0" />
+      <CheckBox fx:id="contrastButton" layoutX="171.0" layoutY="119.0" mnemonicParsing="false" onAction="#filterContrast" text="Контраст" AnchorPane.leftAnchor="172.0" AnchorPane.topAnchor="119.0" />
+      <CheckBox fx:id="brightnessButton" layoutX="171.0" layoutY="152.0" mnemonicParsing="false" onAction="#filterBrightness" text="Яркость" AnchorPane.leftAnchor="172.0" />
+      <CheckBox fx:id="distButton" layoutX="171.0" layoutY="184.0" mnemonicParsing="false" onAction="#filterDistortion" text="Искажение" AnchorPane.leftAnchor="172.0" AnchorPane.topAnchor="184.0" />
       <Text layoutX="25.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Формат" textAlignment="CENTER" wrappingWidth="81.99999523162842" AnchorPane.leftAnchor="25.0">
          <font>
             <Font size="20.0" />
@@ -72,12 +72,12 @@
       </RadioButton>
       <RadioButton fx:id="pngButton" layoutX="37.0" layoutY="276.0" mnemonicParsing="false" onAction="#getFormat" text="PNG" toggleGroup="$format" AnchorPane.leftAnchor="30.0" />
       <RadioButton fx:id="jpgButton" layoutX="37.0" layoutY="307.0" mnemonicParsing="false" onAction="#getFormat" text="JPG" toggleGroup="$format" AnchorPane.leftAnchor="30.0" />
-      <Text layoutX="165.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Размытие" textAlignment="CENTER" wrappingWidth="88.99998995661736" AnchorPane.leftAnchor="165.0">
+      <Text layoutX="161.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Размытие" textAlignment="CENTER" wrappingWidth="88.99998995661736" AnchorPane.leftAnchor="166.0">
          <font>
             <Font size="20.0" />
          </font>
       </Text>
-      <RadioButton fx:id="lightBlurButton" disable="true" layoutX="172.0" layoutY="244.0" mnemonicParsing="false" onAction="#blurImage" text="лёгкое">
+      <RadioButton fx:id="lightBlurButton" disable="true" layoutX="168.0" layoutY="260.0" mnemonicParsing="false" onAction="#blurImage" text="лёгкое" AnchorPane.leftAnchor="172.0">
          <toggleGroup>
             <ToggleGroup fx:id="blur" />
          </toggleGroup>
@@ -85,20 +85,21 @@
             <Font size="16.0" />
          </font>
       </RadioButton>
-      <RadioButton fx:id="middleBlurButton" disable="true" layoutX="172.0" layoutY="277.0" mnemonicParsing="false" onAction="#blurImage" text="среднее" toggleGroup="$blur">
+      <RadioButton fx:id="middleBlurButton" disable="true" layoutX="168.0" layoutY="293.0" mnemonicParsing="false" onAction="#blurImage" text="среднее" toggleGroup="$blur" AnchorPane.leftAnchor="172.0">
          <font>
             <Font size="16.0" />
          </font>
       </RadioButton>
-      <RadioButton fx:id="strongBlurButton" disable="true" layoutX="172.0" layoutY="308.0" mnemonicParsing="false" onAction="#blurImage" text="сильное" toggleGroup="$blur">
+      <RadioButton fx:id="strongBlurButton" disable="true" layoutX="168.0" layoutY="324.0" mnemonicParsing="false" onAction="#blurImage" text="сильное" toggleGroup="$blur" AnchorPane.leftAnchor="172.0">
          <font>
             <Font size="16.0" />
          </font>
       </RadioButton>
-      <CheckBox fx:id="blurButton" layoutX="264.0" layoutY="203.0" mnemonicParsing="false" onAction="#unlockBlur" prefHeight="21.0" prefWidth="0.0" />
-      <TextField fx:id="inputContrast" alignment="CENTER" layoutX="286.0" layoutY="92.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="22.0" prefWidth="38.0" />
-      <TextField fx:id="inputBrightness" alignment="CENTER" layoutX="286.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="22.0" prefWidth="38.0" AnchorPane.leftAnchor="286.0" />
-      <ComboBox fx:id="distBox" layoutX="286.0" layoutY="156.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#chooseDistortion" prefHeight="22.0" prefWidth="52.0" visibleRowCount="5" AnchorPane.leftAnchor="286.0" />
+      <CheckBox fx:id="blurButton" layoutX="262.0" layoutY="229.0" mnemonicParsing="false" onAction="#unlockBlur" prefHeight="21.0" prefWidth="0.0" />
+      <TextField fx:id="inputContrast" alignment="CENTER" layoutX="285.0" layoutY="120.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="22.0" prefWidth="38.0" />
+      <TextField fx:id="inputBrightness" alignment="CENTER" layoutX="285.0" layoutY="153.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="22.0" prefWidth="38.0" AnchorPane.leftAnchor="285.0" />
+      <ComboBox fx:id="distBox" layoutX="285.0" layoutY="184.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#chooseDistortion" prefHeight="22.0" prefWidth="52.0" visibleRowCount="5" AnchorPane.leftAnchor="285.0" />
+      <CheckBox fx:id="sepiaButton" layoutX="172.0" layoutY="88.0" mnemonicParsing="false" onAction="#filterSepia" prefHeight="21.0" prefWidth="93.0" text="Сепия" AnchorPane.leftAnchor="172.0" AnchorPane.topAnchor="88.0" />
 
    </children>
 </AnchorPane>
