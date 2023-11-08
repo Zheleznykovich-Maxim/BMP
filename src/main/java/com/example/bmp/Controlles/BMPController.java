@@ -23,40 +23,31 @@ public class BMPController {
     public Button copyButton;
     @FXML
     public RadioButton bmpButton, pngButton, jpgButton;
-    public TextField imgHeight;
-    public TextField imgWidth;
-
-    @FXML
+    public TextField imgHeight, imgWidth;
     public Button previewButton;
-    public CheckBox bwButton;
-    public RadioButton lightBlurButton;
-    public RadioButton middleBlurButton;
-    public RadioButton strongBlurButton;
+    public CheckBox bwButton, sepiaButton, contrastButton, brightnessButton, distortionButton;
     public CheckBox blurButton;
-    public TextField inputContrast;
-    public CheckBox contrastButton;
-    public TextField inputBrightness;
-    public CheckBox brightnessButton;
-    public CheckBox distButton;
-    public ComboBox distBox;
-    public CheckBox sepiaButton;
+    public RadioButton lightBlurButton, middleBlurButton, strongBlurButton;
+    public Label inputContrast;
+    public Label inputBrightness;
+    public ComboBox distortionBox;
+    public Slider sliderContrast;
+    public Slider sliderBrightness;
     private java.io.File selectedFile;
-    private boolean isBW;
-    private boolean isSepia;
-    private boolean isBlur;
+    private boolean isBW, isSepia, isContrast, isBrightness, isDistortion, isBlur;
     private int blurValue;
-    private boolean isContrast;
-    private boolean isBrightness;
-    private boolean isDistortion;
-    private int choosedDistortion;
+    private int chosenDistortion;
     private Image selectedImage;
     @FXML
     private Label fileName;
 
 
     public void initialize() {
-        distBox.getItems().addAll(1, 2, 3, 4, 5);
+        distortionBox.getItems().addAll(1, 2, 3, 4, 5);
+        inputContrast.textProperty().bind(sliderContrast.valueProperty().asString("%.0f"));
+        inputBrightness.textProperty().bind(sliderBrightness.valueProperty().asString("%.0f"));
     }
+
     @FXML
     protected void selectFile() throws MalformedURLException {
         fileName.setText("");
@@ -79,7 +70,6 @@ public class BMPController {
                 Popup.showPopup("Ошибка в файле изображения.", false);
             } else {
                 selectedImage = image;
-//                isBW = image;
                 copyButton.setDisable(false);
                 imgHeight.setDisable(false);
                 imgHeight.setText(String.valueOf((int)image.getHeight()));
@@ -95,9 +85,6 @@ public class BMPController {
     protected void onCopyClick() {
         if (!isValidNumber(imgHeight.getText(), 1, 1000)
                 || !isValidNumber(imgWidth.getText(), 1, 1000)) {
-            // Если новое значение недопустимо, восстанавливаем предыдущее значение
-//            imgHeight.setText(previousValue);
-//            imgHeight.getStyleClass().add("");
             showAlert("Ошибка", "Введите целое число в диапазоне [1, 1000]");
         } else {
             // Если новое значение допустимо, обновляем предыдущее значение
@@ -107,12 +94,13 @@ public class BMPController {
                     if (image.isError()) {
                         Popup.showPopup("Ошибка в копировании изображения в буфер обмена.",false);
                     } else {
+                        Image baseImage = selectedImage;
+                        ApplyImageChanges();
                         Clipboard clipboard = Clipboard.getSystemClipboard();
                         ClipboardContent content = new ClipboardContent();
-
-                        content.putImage(resizeImage(selectedImage));
+                        content.putImage(selectedImage);
                         clipboard.setContent(content);
-
+                        selectedImage = baseImage;
                         //Вызвать всплывающее окно успеха
                         Popup.showPopup("Файл успешно скопирован в буфер обмена.", true);
                         //                    fileName.setText("");
@@ -147,13 +135,9 @@ public class BMPController {
     }
 
     public WritableImage resizeImage(Image image) {
-        String heightText = imgHeight.getText(); // Получите текст из TextField
-        String widthText = imgWidth.getText();
-
         int height = Integer.parseInt(imgHeight.getText()); // Попытайтесь преобразовать текст в int
         int width = Integer.parseInt(imgWidth.getText());
         // Ваш код для работы с intValue
-
         WritableImage resizedImage = new WritableImage(width, height);
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(width);
@@ -166,12 +150,10 @@ public class BMPController {
     }
     @FXML
     private void filterBlackAndWhite() {
-
         if (bwButton.isSelected()) {
             isBW = true;
         }
         else {
-//            selectedImage = isBW;
             isBW = false;
         }
 
@@ -188,19 +170,13 @@ public class BMPController {
     @FXML
     private void unlockBlur() {
         if (blurButton.isSelected()) {
-//            isBlur = selectedImage;
-
             lightBlurButton.setDisable(false);
             middleBlurButton.setDisable(false);
             strongBlurButton.setDisable(false);
 
         }
         else {
-//            selectedImage = isBlur;
             isBlur = false;
-//            if (bwButton.isSelected()) {
-//                filterBlackAndWhite();
-//            }
             lightBlurButton.setDisable(true);
             lightBlurButton.setSelected(false);
             middleBlurButton.setDisable(true);
@@ -211,7 +187,6 @@ public class BMPController {
     }
     @FXML
     private void blurImage() {
-//        isBlur = selectedImage;
         isBlur = true;
         if (lightBlurButton.isSelected()){
             blurValue = 5;
@@ -229,22 +204,19 @@ public class BMPController {
     private void filterContrast() {
         if (contrastButton.isSelected()) {
 //            isContrast = selectedImage;
-            if (!isValidNumber(inputContrast.getText(), 1.0, 3.0)) {
-                showAlert("Ошибка в значении контрастности", "Введите вещественное число в диапазоне [1.0, 3.0]");
-                contrastButton.setSelected(false);
-            }
-            else {
+//            if (!isValidNumber(inputContrast.getText(), 1.0, 3.0)) {
+//                showAlert("Ошибка в значении контрастности", "Введите вещественное число в диапазоне [1.0, 3.0]");
+//                contrastButton.setSelected(false);
+//            }
+//            else {
                 isContrast = true;
-                inputContrast.setDisable(true);
-            }
+//                inputContrast.setDisable(true);
+//            }
+
         }
         else {
-//            selectedImage = isContrast;
-            inputContrast.setDisable(false);
+//            inputContrast.setDisable(false);
             isContrast = false;
-//            if (bwButton.isSelected()) {
-//                filterBlackAndWhite();
-//            }
         }
 
     }
@@ -252,27 +224,24 @@ public class BMPController {
     private void filterBrightness() {
         if (brightnessButton.isSelected()) {
 //            isContrast = selectedImage;
-            if (!isValidNumber(inputBrightness.getText(), -3.0, 3.0)) {
-                showAlert("Ошибка в значении яркостити", "Введите вещественное число в диапазоне [-3.0, 3.0]");
-                brightnessButton.setSelected(false);
-            }
-            else {
+//            if (!isValidNumber(inputBrightness.getText(), -3.0, 3.0)) {
+//                showAlert("Ошибка в значении яркостити", "Введите вещественное число в диапазоне [-3.0, 3.0]");
+//                brightnessButton.setSelected(false);
+//            }
+//            else {
                 isBrightness = true;
-                inputBrightness.setDisable(true);
-            }
+//                inputBrightness.setDisable(true);
+//            }
         }
         else {
-//            selectedImage = isContrast;
-            inputBrightness.setDisable(false);
+//            inputBrightness.setDisable(false);
             isBrightness = false;
-//            if (bwButton.isSelected()) {
-//                filterBlackAndWhite();
-//            }
+
         }
     }
     @FXML
     private void filterDistortion() {
-        if (distButton.isSelected()) {
+        if (distortionButton.isSelected()) {
             isDistortion = true;
         }
         else {
@@ -282,38 +251,17 @@ public class BMPController {
     }
     @FXML
     private void chooseDistortion() {
-        choosedDistortion = Integer.parseInt(distBox.getSelectionModel().getSelectedItem().toString());
+        chosenDistortion = Integer.parseInt(distortionBox.getSelectionModel().getSelectedItem().toString());
     }
     @FXML
     private void showPreviewImage() {
         if (!isValidNumber(imgHeight.getText(), 1, 1000)
                 || !isValidNumber(imgWidth.getText(), 1, 1000)) {
-            // Если новое значение недопустимо, восстанавливаем предыдущее значение
-//            imgHeight.setText(previousValue);
-//            imgHeight.getStyleClass().add("");
             showAlert("Ошибка в размерах изображения", "Введите целое число в диапазоне [1, 1000]");
         }
         else {
             Image baseImage = selectedImage;
-            resizeImage(selectedImage);
-            if (isBW) {
-                selectedImage = BlackAndWhiteFilter(selectedImage);
-            }
-            if (isSepia) {
-                selectedImage = SepiaFilter(selectedImage);
-            }
-            if (isContrast) {
-                selectedImage = ContrastFilter(selectedImage, inputContrast);
-            }
-            if (isBrightness) {
-                selectedImage = BrightnessFilter(selectedImage, inputBrightness);
-            }
-            if (isDistortion) {
-                selectedImage = DistortionFilter(selectedImage, choosedDistortion);
-            }
-            if (isBlur) {
-                selectedImage = BlurFilter(selectedImage, blurValue);
-            }
+            ApplyImageChanges();
             Stage previewStage = new Stage();
             ImageView previewImageView = new ImageView(selectedImage);
             StackPane stackPane = new StackPane(previewImageView);
@@ -326,6 +274,25 @@ public class BMPController {
         }
 
     }
-
-
+    private void ApplyImageChanges() {
+        resizeImage(selectedImage);
+        if (isBW) {
+            selectedImage = BlackAndWhiteFilter(selectedImage);
+        }
+        if (isSepia) {
+            selectedImage = SepiaFilter(selectedImage);
+        }
+        if (isContrast) {
+            selectedImage = ContrastFilter(selectedImage, inputContrast);
+        }
+        if (isBrightness) {
+            selectedImage = BrightnessFilter(selectedImage, inputBrightness);
+        }
+        if (isDistortion) {
+            selectedImage = DistortionFilter(selectedImage, chosenDistortion);
+        }
+        if (isBlur) {
+            selectedImage = BlurFilter(selectedImage, blurValue);
+        }
+    }
 }

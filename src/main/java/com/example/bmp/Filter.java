@@ -1,11 +1,11 @@
 package com.example.bmp;
 
 import javafx.scene.SnapshotParameters;
+import javafx.scene.control.Label;
 import javafx.scene.effect.*;
 import javafx.scene.image.*;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import javafx.scene.control.TextField;
 
 public class Filter {
     public static WritableImage BlackAndWhiteFilter(Image selectedImage) {
@@ -29,7 +29,7 @@ public class Filter {
         imageView.snapshot(null, sepiaImage);
         return sepiaImage;
     }
-    public static WritableImage ContrastFilter(Image selectedImage, TextField inputContrast) {
+    public static WritableImage ContrastFilter(Image selectedImage, Label inputContrast) {
         Image testImage = selectedImage;
 //        selectedImage = contrastBaseImage;
         double contrastFactor = Double.parseDouble(inputContrast.getText());
@@ -38,7 +38,12 @@ public class Filter {
         WritableImage contrastedImage = new WritableImage(width, height);
         PixelReader pixelReader = testImage.getPixelReader();
         PixelWriter pixelWriter = contrastedImage.getPixelWriter();
+        double minInput = 1.0;  // Минимальное значение, которое пользователь вводит (1)
+        double maxInput = 100.0; // Максимальное значение, которое пользователь вводит (100)
+        double minContrast = 1; // Минимальное значение контраста
+        double maxContrast = 10.0;  // Максимальное значение контраста
 
+        contrastFactor = (contrastFactor - minInput) * (maxContrast - minContrast) / (maxInput - minInput) + minContrast;
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 Color color = pixelReader.getColor(x, y);
@@ -57,20 +62,25 @@ public class Filter {
 
         return contrastedImage;
     }
-    public static Image BrightnessFilter(Image originalImage, TextField inputBrightness) {
+    public static Image BrightnessFilter(Image originalImage, Label inputBrightness) {
         int width = (int) originalImage.getWidth();
         int height = (int) originalImage.getHeight();
         double brightnessFactor = Double.parseDouble(inputBrightness.getText());
         WritableImage brightenedImage = new WritableImage(width, height);
         PixelReader pixelReader = originalImage.getPixelReader();
         PixelWriter pixelWriter = brightenedImage.getPixelWriter();
+        double minInput = 0;  // Минимальное значение, которое пользователь вводит (1)
+        double maxInput = 100.0; // Максимальное значение, которое пользователь вводит (100)
+        double minBrightness = -1; // Минимальное значение контраста
+        double maxBrightness = 1;  // Максимальное значение контраста
 
+        brightnessFactor = (brightnessFactor - minInput) * (maxBrightness - minBrightness) / (maxInput - minInput) + minBrightness;
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 Color color = pixelReader.getColor(x, y);
-                double red = color.getRed() + brightnessFactor / 3;
-                double green = color.getGreen() + brightnessFactor / 3;
-                double blue = color.getBlue() + brightnessFactor / 3;
+                double red = color.getRed() + brightnessFactor;
+                double green = color.getGreen() + brightnessFactor;
+                double blue = color.getBlue() + brightnessFactor;
 
                 // Ограничьте значения каналов до диапазона [0, 1]
                 red = Math.min(1.0, Math.max(0.0, red));
@@ -114,8 +124,8 @@ public class Filter {
 
         ImageView imageView = new ImageView(selectedImage);
         WritableImage bluredImage = new WritableImage(
-                (int)selectedImage.getWidth() - 20,
-                (int)selectedImage.getHeight() - 20);
+                (int)selectedImage.getWidth(),
+                (int)selectedImage.getHeight());
         // Применение эффекта ColorAdjust для получения размытого изображения
         GaussianBlur mediumBlur = new GaussianBlur();
         mediumBlur.setRadius(blurValue);
@@ -125,8 +135,8 @@ public class Filter {
         SnapshotParameters params = new SnapshotParameters();
 
         // Определяем область, которую нужно захватить (обрезать)
-        int x = 10; // Левая граница
-        int y = 10; // Верхняя граница
+        int x = 0; // Левая граница
+        int y = 0; // Верхняя граница
         int width = (int) (imageView.getBoundsInLocal().getWidth()) - x;
         int height = (int) (imageView.getBoundsInLocal().getHeight()) - y;
         params.setViewport(new javafx.geometry.Rectangle2D(x, y, width, height));
