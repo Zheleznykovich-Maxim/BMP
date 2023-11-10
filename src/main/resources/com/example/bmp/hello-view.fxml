@@ -13,19 +13,19 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="503.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bmp.Controlles.BMPController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="453.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bmp.Controlles.BMPController">
    <children>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="217.0" layoutY="404.0" mnemonicParsing="false" onAction="#selectFile" prefHeight="39.0" prefWidth="160.0" styleClass="btn" text="Выберите файл" AnchorPane.leftAnchor="217.0" AnchorPane.rightAnchor="215.0">
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="217.0" layoutY="399.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectFile" prefHeight="39.0" prefWidth="155.0" styleClass="btn" text="Выберите файл">
          <font>
-            <Font size="18.0" />
+            <Font size="16.0" />
          </font></Button>
       <TextField fx:id="imgHeight" disable="true" layoutX="25.0" layoutY="153.0" prefHeight="31.0" prefWidth="70.0" AnchorPane.leftAnchor="25.0" />
       <TextField fx:id="imgWidth" disable="true" layoutX="25.0" layoutY="88.0" prefHeight="31.0" prefWidth="70.0" AnchorPane.leftAnchor="25.0" />
-      <Label fx:id="fileName" alignment="CENTER" contentDisplay="CENTER" layoutX="187.0" layoutY="371.0" prefHeight="21.0" prefWidth="218.0" textAlignment="CENTER">
+      <Label fx:id="fileName" alignment="CENTER" contentDisplay="CENTER" layoutX="187.0" layoutY="369.0" prefHeight="21.0" prefWidth="218.0" textAlignment="CENTER">
          <font>
-            <Font size="18.0" />
+            <Font size="16.0" />
          </font></Label>
-      <Button fx:id="copyButton" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="166.0" layoutY="450.0" mnemonicParsing="false" onAction="#onCopyClick" prefHeight="39.0" prefWidth="262.0" text="Копировать в буфер обмена" AnchorPane.leftAnchor="166.0" AnchorPane.rightAnchor="164.0">
+      <Button fx:id="copyButton" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="360.0" layoutY="306.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCopyClick" prefHeight="39.0" prefWidth="218.0" text="Копировать в буфер" AnchorPane.rightAnchor="14.0">
          <font>
             <Font size="18.0" />
          </font></Button>
@@ -44,7 +44,7 @@
          </font>
       </Text>
       <Button fx:id="previewButton" layoutX="25.0" layoutY="353.0" mnemonicParsing="false" onAction="#showPreviewImage" text="Предосмотр" />
-      <ListView layoutX="360.0" layoutY="51.0" prefHeight="200.0" prefWidth="218.0" />
+      <ListView fx:id="ListViewClipboard" layoutX="360.0" layoutY="51.0" prefHeight="200.0" prefWidth="218.0" AnchorPane.rightAnchor="14.0" />
       <Text layoutX="360.0" layoutY="38.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="История копирования" textAlignment="CENTER" wrappingWidth="217.99999356269836">
          <font>
             <Font size="20.0" />
@@ -55,8 +55,8 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <Button layoutX="360.0" layoutY="265.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="106.0" text="Button" />
-      <Button layoutX="472.0" layoutY="265.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="106.0" text="Button" />
+      <Button fx:id="deleteButton" layoutX="360.0" layoutY="265.0" mnemonicParsing="false" onAction="#deleteSelected" prefHeight="31.0" prefWidth="83.0" text="Удалить" />
+      <Button fx:id="clearAllButton" layoutX="458.0" layoutY="265.0" mnemonicParsing="false" onAction="#clearAllClipboard" prefHeight="31.0" prefWidth="120.0" text="Очистить всё" />
       <CheckBox fx:id="bwButton" layoutX="160.0" layoutY="59.0" mnemonicParsing="false" onAction="#filterBlackAndWhite" prefHeight="21.0" prefWidth="93.0" text="Ч\б" AnchorPane.leftAnchor="160.0" AnchorPane.topAnchor="59.0">
          <font>
             <Font size="14.0" />
@@ -115,12 +115,12 @@
             <Font size="14.0" />
          </font></CheckBox>
       <Slider fx:id="sliderContrast" layoutX="257.0" layoutY="122.0" min="1.0" prefHeight="18.0" prefWidth="70.0" AnchorPane.leftAnchor="257.0" />
-      <Label fx:id="inputContrast" alignment="CENTER" contentDisplay="CENTER" layoutX="263.0" layoutY="107.0" prefHeight="21.0" prefWidth="58.0" text="100" textAlignment="CENTER" AnchorPane.bottomAnchor="377.0" AnchorPane.leftAnchor="263.0" AnchorPane.topAnchor="105.0">
+      <Label fx:id="inputContrast" alignment="CENTER" contentDisplay="CENTER" layoutX="263.0" layoutY="107.0" prefHeight="21.0" prefWidth="58.0" text="100" textAlignment="CENTER" AnchorPane.bottomAnchor="327.0">
          <font>
             <Font size="11.0" />
          </font></Label>
-      <Slider fx:id="sliderBrightness" layoutX="258.0" layoutY="155.0" min="1.0" prefHeight="18.0" prefWidth="70.0" />
-      <Label fx:id="inputBrightness" alignment="CENTER" contentDisplay="CENTER" layoutX="264.0" layoutY="140.0" prefHeight="21.0" prefWidth="58.0" text="100" textAlignment="CENTER">
+      <Slider fx:id="sliderBrightness" layoutX="258.0" layoutY="155.0" min="1.0" prefHeight="18.0" prefWidth="70.0" value="50.0" />
+      <Label fx:id="inputBrightness" alignment="CENTER" contentDisplay="CENTER" layoutX="264.0" layoutY="140.0" prefHeight="21.0" prefWidth="58.0" text="100" textAlignment="CENTER" AnchorPane.bottomAnchor="294.0">
          <font>
             <Font size="11.0" />
          </font>

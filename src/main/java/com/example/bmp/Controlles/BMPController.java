@@ -1,6 +1,9 @@
 package com.example.bmp.Controlles;
 
+import com.example.bmp.ClipboardHistoory;
 import com.example.bmp.Popup;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -10,9 +13,9 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import java.net.MalformedURLException;
-
+import java.util.HashSet;
+import java.util.Set;
 import static com.example.bmp.Filter.*;
 import static com.example.bmp.Validation.isValidNumber;
 import static com.example.bmp.Validation.showAlert;
@@ -33,6 +36,8 @@ public class BMPController {
     public ComboBox distortionBox;
     public Slider sliderContrast;
     public Slider sliderBrightness;
+    public ListView ListViewClipboard;
+    public Button clearAllButton;
     private java.io.File selectedFile;
     private boolean isBW, isSepia, isContrast, isBrightness, isDistortion, isBlur;
     private int blurValue;
@@ -41,11 +46,41 @@ public class BMPController {
     @FXML
     private Label fileName;
 
+    public static ObservableList<String> clipboardItems = FXCollections.observableArrayList();
+     // Для отслеживания уникальных элементов
 
     public void initialize() {
         distortionBox.getItems().addAll(1, 2, 3, 4, 5);
         inputContrast.textProperty().bind(sliderContrast.valueProperty().asString("%.0f"));
         inputBrightness.textProperty().bind(sliderBrightness.valueProperty().asString("%.0f"));
+        // Обработка изменений в буфере обмена
+        ListViewClipboard.setItems(clipboardItems);
+
+        ListViewClipboard.setCellFactory(param -> new ListCell<String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle(null);
+                } else {
+                    setText(item);
+                    setStyle("-fx-border-color: lightgray; -fx-border-width: 0 0 1 0;");
+                }
+            }
+        });
+        ClipboardHistoory.start();
+    }
+    @FXML
+    private void clearAllClipboard(){
+        ListViewClipboard.getItems().clear();
+    }
+    @FXML
+    private void deleteSelected() {
+        final int selectedId = ListViewClipboard.getSelectionModel().getSelectedIndex();
+        if (selectedId != -1) {
+            ListViewClipboard.getItems().remove(selectedId);
+        }
     }
 
     @FXML
@@ -68,6 +103,7 @@ public class BMPController {
             Image image = new Image(selectedFile.toURI().toString());
             if (image.isError()) {
                 Popup.showPopup("Ошибка в файле изображения.", false);
+                fileName.setText("");
             } else {
                 selectedImage = image;
                 copyButton.setDisable(false);
@@ -102,8 +138,8 @@ public class BMPController {
                         clipboard.setContent(content);
                         selectedImage = baseImage;
                         //Вызвать всплывающее окно успеха
+                        ClipboardHistoory.addToClipboard(selectedFile.getName());
                         Popup.showPopup("Файл успешно скопирован в буфер обмена.", true);
-                        //                    fileName.setText("");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
