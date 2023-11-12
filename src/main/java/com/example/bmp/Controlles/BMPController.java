@@ -39,7 +39,7 @@ public class BMPController {
     public ListView ListViewClipboard;
     public Button clearAllButton;
     private java.io.File selectedFile;
-    private boolean isBW, isSepia, isContrast, isBrightness, isDistortion, isBlur;
+    private boolean isBlur;
     private int blurValue;
     private int chosenDistortion;
     private Image selectedImage;
@@ -86,9 +86,7 @@ public class BMPController {
     @FXML
     protected void selectFile() throws MalformedURLException {
         fileName.setText("");
-        copyButton.setDisable(true);
-        imgHeight.setDisable(true);
-        imgWidth.setDisable(true);
+
         FileChooser fileChooser = new FileChooser();
         String[] format = getFormat();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(format[0], format[1]));
@@ -104,17 +102,16 @@ public class BMPController {
             if (image.isError()) {
                 Popup.showPopup("Ошибка в файле изображения.", false);
                 fileName.setText("");
+                turnButtonsOnAndOff(true);
             } else {
                 selectedImage = image;
-                copyButton.setDisable(false);
-                imgHeight.setDisable(false);
                 imgHeight.setText(String.valueOf((int)image.getHeight()));
-                imgWidth.setDisable(false);
                 imgWidth.setText(String.valueOf((int)image.getWidth()));
-
+                turnButtonsOnAndOff(false);
             }
         } else {
             Popup.showPopup("Ошибка: не выбран файл!", false);
+            turnButtonsOnAndOff(true);
         }
     }
     @FXML
@@ -184,105 +181,15 @@ public class BMPController {
         return resizedImage;
 
     }
-    @FXML
-    private void filterBlackAndWhite() {
-        if (bwButton.isSelected()) {
-            isBW = true;
-        }
-        else {
-            isBW = false;
-        }
 
-    }
-    @FXML
-    private void filterSepia() {
-        if (sepiaButton.isSelected()) {
-            isSepia = true;
-        }
-        else {
-            isSepia = false;
-        }
-    }
-    @FXML
-    private void unlockBlur() {
-        if (blurButton.isSelected()) {
-            lightBlurButton.setDisable(false);
-            middleBlurButton.setDisable(false);
-            strongBlurButton.setDisable(false);
-
-        }
-        else {
-            isBlur = false;
-            lightBlurButton.setDisable(true);
-            lightBlurButton.setSelected(false);
-            middleBlurButton.setDisable(true);
-            middleBlurButton.setSelected(false);
-            strongBlurButton.setDisable(true);
-            strongBlurButton.setSelected(false);
-        }
-    }
     @FXML
     private void blurImage() {
-        isBlur = true;
         if (lightBlurButton.isSelected()){
             blurValue = 5;
         } else if (middleBlurButton.isSelected()) {
             blurValue = 10;
         } else if (strongBlurButton.isSelected()) {
             blurValue = 20;
-        }
-        else {
-            isBlur = false;
-        }
-    }
-
-    @FXML
-    private void filterContrast() {
-        if (contrastButton.isSelected()) {
-//            isContrast = selectedImage;
-//            if (!isValidNumber(inputContrast.getText(), 1.0, 3.0)) {
-//                showAlert("Ошибка в значении контрастности", "Введите вещественное число в диапазоне [1.0, 3.0]");
-//                contrastButton.setSelected(false);
-//            }
-//            else {
-                isContrast = true;
-//                inputContrast.setDisable(true);
-//            }
-
-        }
-        else {
-//            inputContrast.setDisable(false);
-            isContrast = false;
-        }
-
-    }
-    @FXML
-    private void filterBrightness() {
-        if (brightnessButton.isSelected()) {
-//            isContrast = selectedImage;
-//            if (!isValidNumber(inputBrightness.getText(), -3.0, 3.0)) {
-//                showAlert("Ошибка в значении яркостити", "Введите вещественное число в диапазоне [-3.0, 3.0]");
-//                brightnessButton.setSelected(false);
-//            }
-//            else {
-                isBrightness = true;
-//                inputBrightness.setDisable(true);
-//            }
-        }
-        else {
-//            inputBrightness.setDisable(false);
-            isBrightness = false;
-
-        }
-    }
-    @FXML
-    private void filterDistortion() {
-        if (distortionButton.isSelected()) {
-            isDistortion = true;
-        }
-        else {
-//            selectedImage = isBW;
-            isDistortion = false;
         }
     }
     @FXML
@@ -312,23 +219,35 @@ public class BMPController {
     }
     private void ApplyImageChanges() {
         resizeImage(selectedImage);
-        if (isBW) {
+        if (bwButton.isSelected()) {
             selectedImage = BlackAndWhiteFilter(selectedImage);
         }
-        if (isSepia) {
+        if (sepiaButton.isSelected()) {
             selectedImage = SepiaFilter(selectedImage);
         }
-        if (isContrast) {
+        if (contrastButton.isSelected()) {
             selectedImage = ContrastFilter(selectedImage, inputContrast);
         }
-        if (isBrightness) {
+        if (brightnessButton.isSelected()) {
             selectedImage = BrightnessFilter(selectedImage, inputBrightness);
         }
-        if (isDistortion) {
+        if (distortionButton.isSelected()) {
             selectedImage = DistortionFilter(selectedImage, chosenDistortion);
         }
-        if (isBlur) {
+        if (blurButton.isSelected()) {
             selectedImage = BlurFilter(selectedImage, blurValue);
         }
+    }
+    private void turnButtonsOnAndOff(boolean turn) {
+        copyButton.setDisable(turn);
+        imgHeight.setDisable(turn);
+        imgWidth.setDisable(turn);
+        bwButton.setDisable(turn);
+        sepiaButton.setDisable(turn);
+        contrastButton.setDisable(turn);
+        brightnessButton.setDisable(turn);
+        distortionButton.setDisable(turn);
+        blurButton.setDisable(turn);
+        previewButton.setDisable(turn);
     }
 }

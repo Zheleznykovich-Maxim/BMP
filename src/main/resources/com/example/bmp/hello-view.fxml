@@ -43,7 +43,7 @@
             <Font size="22.0" />
          </font>
       </Text>
-      <Button fx:id="previewButton" layoutX="25.0" layoutY="353.0" mnemonicParsing="false" onAction="#showPreviewImage" text="Предосмотр" />
+      <Button fx:id="previewButton" disable="true" layoutX="25.0" layoutY="353.0" mnemonicParsing="false" onAction="#showPreviewImage" text="Предосмотр" />
       <ListView fx:id="ListViewClipboard" layoutX="360.0" layoutY="51.0" prefHeight="200.0" prefWidth="218.0" AnchorPane.rightAnchor="14.0" />
       <Text layoutX="360.0" layoutY="38.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="История копирования" textAlignment="CENTER" wrappingWidth="217.99999356269836">
          <font>
@@ -57,19 +57,19 @@
       </Text>
       <Button fx:id="deleteButton" layoutX="360.0" layoutY="265.0" mnemonicParsing="false" onAction="#deleteSelected" prefHeight="31.0" prefWidth="83.0" text="Удалить" />
       <Button fx:id="clearAllButton" layoutX="458.0" layoutY="265.0" mnemonicParsing="false" onAction="#clearAllClipboard" prefHeight="31.0" prefWidth="120.0" text="Очистить всё" />
-      <CheckBox fx:id="bwButton" layoutX="160.0" layoutY="59.0" mnemonicParsing="false" onAction="#filterBlackAndWhite" prefHeight="21.0" prefWidth="93.0" text="Ч\б" AnchorPane.leftAnchor="160.0" AnchorPane.topAnchor="59.0">
+      <CheckBox fx:id="bwButton" disable="true" layoutX="160.0" layoutY="59.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="93.0" text="Ч\б" AnchorPane.leftAnchor="160.0" AnchorPane.topAnchor="59.0">
          <font>
             <Font size="14.0" />
          </font></CheckBox>
-      <CheckBox fx:id="contrastButton" layoutX="160.0" layoutY="120.0" mnemonicParsing="false" onAction="#filterContrast" text="Контраст" AnchorPane.leftAnchor="160.0" AnchorPane.topAnchor="120.0">
+      <CheckBox fx:id="contrastButton" disable="true" layoutX="160.0" layoutY="120.0" mnemonicParsing="false" text="Контраст" AnchorPane.leftAnchor="160.0" AnchorPane.topAnchor="120.0">
          <font>
             <Font size="14.0" />
          </font></CheckBox>
-      <CheckBox fx:id="brightnessButton" layoutX="160.0" layoutY="153.0" mnemonicParsing="false" onAction="#filterBrightness" text="Яркость" AnchorPane.leftAnchor="160.0">
+      <CheckBox fx:id="brightnessButton" disable="true" layoutX="160.0" layoutY="153.0" mnemonicParsing="false" text="Яркость" AnchorPane.leftAnchor="160.0">
          <font>
             <Font size="14.0" />
          </font></CheckBox>
-      <CheckBox fx:id="distortionButton" layoutX="160.0" layoutY="185.0" mnemonicParsing="false" onAction="#filterDistortion" text="Искажение" AnchorPane.leftAnchor="160.0" AnchorPane.topAnchor="185.0">
+      <CheckBox fx:id="distortionButton" disable="true" layoutX="160.0" layoutY="185.0" mnemonicParsing="false" text="Искажение" AnchorPane.leftAnchor="160.0" AnchorPane.topAnchor="185.0">
          <font>
             <Font size="14.0" />
          </font></CheckBox>
@@ -90,7 +90,7 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <RadioButton fx:id="lightBlurButton" disable="true" layoutX="160.0" layoutY="261.0" mnemonicParsing="false" onAction="#blurImage" text="лёгкое" AnchorPane.leftAnchor="160.0">
+      <RadioButton fx:id="lightBlurButton" layoutX="160.0" layoutY="261.0" mnemonicParsing="false" onAction="#blurImage" text="лёгкое" AnchorPane.leftAnchor="160.0">
          <toggleGroup>
             <ToggleGroup fx:id="blur" />
          </toggleGroup>
@@ -98,19 +98,19 @@
             <Font size="16.0" />
          </font>
       </RadioButton>
-      <RadioButton fx:id="middleBlurButton" disable="true" layoutX="160.0" layoutY="294.0" mnemonicParsing="false" onAction="#blurImage" text="среднее" toggleGroup="$blur" AnchorPane.leftAnchor="160.0">
+      <RadioButton fx:id="middleBlurButton" layoutX="160.0" layoutY="294.0" mnemonicParsing="false" onAction="#blurImage" text="среднее" toggleGroup="$blur" AnchorPane.leftAnchor="160.0">
          <font>
             <Font size="16.0" />
          </font>
       </RadioButton>
-      <RadioButton fx:id="strongBlurButton" disable="true" layoutX="160.0" layoutY="325.0" mnemonicParsing="false" onAction="#blurImage" text="сильное" toggleGroup="$blur" AnchorPane.leftAnchor="160.0">
+      <RadioButton fx:id="strongBlurButton" layoutX="160.0" layoutY="325.0" mnemonicParsing="false" onAction="#blurImage" text="сильное" toggleGroup="$blur" AnchorPane.leftAnchor="160.0">
          <font>
             <Font size="16.0" />
          </font>
       </RadioButton>
-      <CheckBox fx:id="blurButton" layoutX="250.0" layoutY="230.0" mnemonicParsing="false" onAction="#unlockBlur" prefHeight="21.0" prefWidth="0.0" />
+      <CheckBox fx:id="blurButton" disable="true" layoutX="250.0" layoutY="230.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="0.0" />
       <ComboBox fx:id="distortionBox" layoutX="273.0" layoutY="185.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#chooseDistortion" prefHeight="22.0" prefWidth="52.0" visibleRowCount="5" AnchorPane.leftAnchor="273.0" />
-      <CheckBox fx:id="sepiaButton" layoutX="160.0" layoutY="89.0" mnemonicParsing="false" onAction="#filterSepia" prefHeight="21.0" prefWidth="93.0" text="Сепия" AnchorPane.leftAnchor="160.0" AnchorPane.topAnchor="89.0">
+      <CheckBox fx:id="sepiaButton" disable="true" layoutX="160.0" layoutY="89.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="93.0" text="Сепия" AnchorPane.leftAnchor="160.0" AnchorPane.topAnchor="89.0">
          <font>
             <Font size="14.0" />
          </font></CheckBox>
