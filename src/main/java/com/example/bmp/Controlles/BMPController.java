@@ -14,8 +14,6 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.net.MalformedURLException;
-import java.util.HashSet;
-import java.util.Set;
 import static com.example.bmp.Filter.*;
 import static com.example.bmp.Validation.isValidNumber;
 import static com.example.bmp.Validation.showAlert;
@@ -39,7 +37,6 @@ public class BMPController {
     public ListView ListViewClipboard;
     public Button clearAllButton;
     private java.io.File selectedFile;
-    private boolean isBlur;
     private int blurValue;
     private int chosenDistortion;
     private Image selectedImage;
@@ -107,6 +104,7 @@ public class BMPController {
                 selectedImage = image;
                 imgHeight.setText(String.valueOf((int)image.getHeight()));
                 imgWidth.setText(String.valueOf((int)image.getWidth()));
+
                 turnButtonsOnAndOff(false);
             }
         } else {
@@ -177,7 +175,6 @@ public class BMPController {
         imageView.setFitHeight(height);
 //            imageView.setPreserveRatio(true);
         imageView.snapshot(null, resizedImage);
-        selectedImage = resizedImage;
         return resizedImage;
 
     }
@@ -218,7 +215,7 @@ public class BMPController {
 
     }
     private void ApplyImageChanges() {
-        resizeImage(selectedImage);
+        selectedImage = resizeImage(selectedImage);
         if (bwButton.isSelected()) {
             selectedImage = BlackAndWhiteFilter(selectedImage);
         }

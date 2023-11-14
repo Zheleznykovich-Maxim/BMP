@@ -8,10 +8,54 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
-* {
-  -fx-font-family: 'sans-serif'; }
+.text-field {
+    -fx-text-fill: black;
+    -fx-control-inner-background: white;
+    -fx-font-size: 15px;
+}
+/* outer combo-box text */
 
-.b,
+Text, .radio-button, CheckBox, Label{
+      -fx-font-family: 'Verdana', 'Geneva', 'sans-serif';
+      -fx-text-background-color: blue;
+         -fx-text-fill: #FFF;
+          -fx-fill: #FFF;
+}
+/* outer combo-box text */
+.combo-box .list-cell {
+  -fx-text-fill: #000;
+  -fx-fill: #000;
+}
+CheckBox {
+    -fx-font-size: 14px;
+}
+/* combo-box hover text */
+.combo-box .list-view .list-cell:hover {
+  -fx-background-color: #2294f2;  /* Cadet Blue */
+  -fx-text-fill: #000;
+    -fx-fill: #000;
+}
+.slider .thumb {
+    -fx-background-color:  #2196f3; /* Замените #ff0000 на цвет вашего выбора */
+     /* Ширина границы (по умолчанию может быть другой) */
+    -fx-padding: 5px;
+}
+.slider .track {
+    -fx-background-color:  #2196f3; /* Замените #ff0000 на цвет вашего выбора */
+    -fx-padding: 0.25px;
+}
+.slider { -fx-padding: 1px;}
+
+
+/* стили для невыбранной кнопки */
+.radio-button {
+    -fx-font-size: 14;
+}
+.radio-button:selected .radio .dot {
+    -fx-background-color: #2196f3;
+    -fx-background-insets: 0;
+    -fx-font-size: 12;
+}
 .strong {
   -fx-font-weight: bold; }
 
